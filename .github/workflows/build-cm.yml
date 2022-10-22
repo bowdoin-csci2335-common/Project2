@@ -36,10 +36,10 @@ jobs:
           ls -la ${{ github.workspace }}
      
       
-      - name: Setup JDK 11
+      - name: Setup JDK 17
         uses: actions/setup-java@v1.4.3
         with:
-          java-version: '11'
+          java-version: '17'
 
       - name: Copy config files for Spring Boot
         run: cp CoffeeMaker/src/main/resources/application.yml.template CoffeeMaker/src/main/resources/application.yml
