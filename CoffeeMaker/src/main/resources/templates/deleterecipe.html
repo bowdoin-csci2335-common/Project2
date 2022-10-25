@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>View Recipes</title>
+<title>Delete Recipes</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" href="css/bootstrap.css" />
+<link rel="stylesheet" href="css/app.css" />
 </head>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 <body>
-	<h1>Coffee Recipes</h1>
-	<div layout:fragment="content">
-
-		<script> 
+	<script> 
     /*<![CDATA[*/
 		var app = angular.module('myApp', []);
-		app.controller('recipesCtrl', function($scope, $http, $q) {
+		app.controller('recipesCtrl', function($scope, $http) {
 			
 			function updateRecipes() {
 				$http.get("/api/v1/recipes").then(function (response) {
@@ -22,14 +21,12 @@
 			}
 			
 			function deleteRecipe(recipe) {
-				var deferred = $q.defer();
 		        $http.delete("/api/v1/recipes/" + recipe)
 		            .then(
 		            function (response) {
 		            		console.log(response);
 		    				$scope.submissionSuccess=true;	
 		    				
-		                deferred.resolve(response.data);
 		                
 		             	updateRecipes();
 		            },
@@ -38,7 +35,6 @@
 		                console.log(rejection);
 		                
 						$scope.submissionSuccess=false;	
-		                deferred.reject(rejection);
 		                
 		             	// Update recipe list
 				        $http.get("/api/v1/recipes").then(function (response) {
@@ -66,17 +62,28 @@
 	/*]]>*/
 	</script>
 
-		<div ng-app="myApp" ng-controller="recipesCtrl">
+	<div layout:fragment="content" class="generic-container ng-cloak"
+		ng-app="myApp" ng-controller="recipesCtrl as ctrl">
+
+		<h1>Coffee Recipes</h1>
+
+		<div>
 			<ul>
 				<li ng-repeat="recipe in recipes"><label>{{recipe.name}}
 						<input type="radio" ng-model="$parent.name" name="name"
 						value="{{recipe.name}}" required="true" />
 				</label></li>
 			</ul>
-			<br /> <input type="checkbox" name="all" class="checkbox"
-				ng-model="deleteAll">Delete all recipes?</input> <input
-				type="submit" value="Delete" ng-click="del()"
-				ng-if="recipes.length > 0" />
+			<br />
+
+
+			<div ng-if="recipes.length > 0">
+				<input type="checkbox" name="all" class="checkbox"
+					ng-model="$parent.deleteAll"> Delete all recipes? </input> <br />
+				<input type="submit" value="Delete" ng-click="del()"
+					class="btn btn-warning btn-sm" />
+			</div>
+
 
 			<div ng-if="0 >= recipes.length">There are no recipes in the
 				Coffee Maker.</div>

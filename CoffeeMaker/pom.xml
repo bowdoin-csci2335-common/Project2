@@ -11,11 +11,11 @@
 	<artifactId>CoffeeMaker</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>CoffeeMaker</name>
-	<description>CoffeeMaker with transaction support</description>
+	<description>Computer-controlled coffee maker application</description>
 
 
 	<properties>
-		<java.version>11</java.version>
+		<java.version>17</java.version>
 		<checkstyle.config.location>src/test/resources/reporting/csc_checkstyle.xml</checkstyle.config.location>
 		<checkstyle.includeTestResources>true</checkstyle.includeTestResources>
 	</properties>
